@@ -216,7 +216,7 @@ export default function AdminOrdersPage() {
                       </div>
                     </td>
                     <td className="px-6 py-4 font-semibold">
-                      ₹{order.amount.toLocaleString()}
+                      Rs. {order.amount.toLocaleString()}
                     </td>
                     <td className="px-6 py-4">{order.items} items</td>
                     <td className="px-6 py-4">
@@ -274,7 +274,7 @@ export default function AdminOrdersPage() {
           <div className="bg-secondary rounded-lg p-6 border border-border">
             <p className="text-muted-foreground text-sm mb-2">Total Revenue</p>
             <p className="text-3xl font-bold">
-              ₹{orders.reduce((acc, o) => acc + o.amount, 0).toLocaleString()}
+              Rs. {orders.reduce((acc, o) => acc + o.amount, 0).toLocaleString()}
             </p>
           </div>
           <div className="bg-secondary rounded-lg p-6 border border-border">

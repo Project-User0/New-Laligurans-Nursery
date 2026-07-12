@@ -49,7 +49,7 @@ export default function AdminDashboard() {
   const stats = [
     {
       label: 'Total Revenue',
-      value: '₹4,52,500',
+      value: 'Rs. 4,52,500',
       change: '+12.5%',
       icon: DollarSign,
       color: 'bg-blue-500',
@@ -184,11 +184,18 @@ export default function AdminDashboard() {
               color: 'bg-pink-500',
             },
             {
+              title: 'Payments',
+              description: 'Manage payment methods and status',
+              href: '/admin/payments',
+              icon: DollarSign,
+              color: 'bg-indigo-500',
+            },
+            {
               title: 'Settings',
               description: 'Configure store settings',
               href: '/admin/settings',
               icon: BarChart3,
-              color: 'bg-indigo-500',
+              color: 'bg-slate-500',
             },
           ].map((action) => {
             const Icon = action.icon
@@ -231,19 +238,19 @@ export default function AdminDashboard() {
               {
                 id: 'ORD001',
                 customer: 'John Doe',
-                amount: '₹2,450',
+                amount: 'Rs. 2,450',
                 status: 'Delivered',
               },
               {
                 id: 'ORD002',
                 customer: 'Jane Smith',
-                amount: '₹1,890',
+                amount: 'Rs. 1,890',
                 status: 'Processing',
               },
               {
                 id: 'ORD003',
                 customer: 'Bob Johnson',
-                amount: '₹3,200',
+                amount: 'Rs. 3,200',
                 status: 'Shipped',
               },
             ].map((order) => (

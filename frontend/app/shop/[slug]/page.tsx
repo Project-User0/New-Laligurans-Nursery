@@ -8,7 +8,7 @@ import { useProduct } from '@/hooks/useProducts'
 import { useCart } from '@/store/cart'
 import { Heart, ShoppingCart, Star } from 'lucide-react'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { toast } from 'sonner'
 import { motion } from 'framer-motion'
 import { use } from 'react'
@@ -26,10 +26,25 @@ export default function ProductDetailPage({
 }
 
 function ProductDetailContent({ slug }: { slug: string }) {
-  const { data: product, isLoading } = useProduct(slug)
+  const { data: product, isLoading } = useProduct(slug);
   const [quantity, setQuantity] = useState(1)
+  const [selectedImage, setSelectedImage] = useState(0)
   const [isWishlisted, setIsWishlisted] = useState(false)
   const addItem = useCart((state) => state.addItem)
+
+  const galleryImages = useMemo(() => {
+    if (!product?.images?.length) return []
+
+    const images = product.images.filter(Boolean)
+    const extraImages = [
+      'https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1485955900006-10f4d324d411?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1491147334573-44cbb4602074?auto=format&fit=crop&w=1200&q=80',
+    ]
+
+    const combined = [...images, ...extraImages]
+    return Array.from(new Set(combined)).slice(0, 4)
+  }, [product?.images])
 
   if (isLoading) {
     return (
@@ -111,9 +126,9 @@ function ProductDetailContent({ slug }: { slug: string }) {
           {/* Images */}
           <div>
             <div className="relative bg-secondary rounded-lg overflow-hidden h-96 md:h-[500px]">
-              {product.images[0] && (
+              {galleryImages[selectedImage] && (
                 <img
-                  src={product.images[0]}
+                  src={galleryImages[selectedImage]}
                   alt={product.name}
                   className="w-full h-full object-cover"
                 />
@@ -124,6 +139,21 @@ function ProductDetailContent({ slug }: { slug: string }) {
                 </div>
               )}
             </div>
+
+            {galleryImages.length > 1 && (
+              <div className="mt-4 grid grid-cols-4 gap-3">
+                {galleryImages.map((image, index) => (
+                  <button
+                    key={`${image}-${index}`}
+                    type="button"
+                    onClick={() => setSelectedImage(index)}
+                    className={`overflow-hidden rounded-lg border ${selectedImage === index ? 'border-primary ring-2 ring-primary/20' : 'border-border'}`}
+                  >
+                    <img src={image} alt={`${product.name} thumbnail ${index + 1}`} className="h-20 w-full object-cover" />
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Details */}
@@ -149,15 +179,15 @@ function ProductDetailContent({ slug }: { slug: string }) {
                 {product.discountPrice ? (
                   <>
                     <span className="text-3xl font-bold text-primary">
-                      ₹{product.discountPrice.toLocaleString()}
+                      Rs. {product.discountPrice.toLocaleString()}
                     </span>
                     <span className="text-lg text-muted-foreground line-through">
-                      ₹{product.price.toLocaleString()}
+                      Rs. {product.price.toLocaleString()}
                     </span>
                   </>
                 ) : (
                   <span className="text-3xl font-bold text-primary">
-                    ₹{product.price.toLocaleString()}
+                    Rs. {product.price.toLocaleString()}
                   </span>
                 )}
               </div>

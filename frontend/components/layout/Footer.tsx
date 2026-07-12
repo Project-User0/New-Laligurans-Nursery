@@ -13,7 +13,7 @@ export function Footer() {
           <div>
             <Link href="/" className="flex items-center gap-3 mb-4">
               <Image
-                src="laligurans-logo.png" // Update with your logo path
+                src="/laligurans-logo.png" // Update with your logo path
                 alt="New Laligurans Nursery"
                 width={60}
                 height={60}

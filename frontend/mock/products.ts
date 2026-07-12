@@ -1712,11 +1712,15 @@ export function getPetFriendlyProducts() {
 }
 
 export function searchProducts(query: string) {
-  const searchTerm = query.toLowerCase()
-  return mockProducts.filter(
-    (p) =>
-      p.name.toLowerCase().includes(searchTerm) ||
-      p.description.toLowerCase().includes(searchTerm) ||
-      p.category.toLowerCase().includes(searchTerm)
-  )
+  const searchTerm = query.trim().toLowerCase()
+  if (!searchTerm) return mockProducts
+
+  return mockProducts.filter((p) => {
+    const haystacks = [p.name, p.slug, p.description, p.category, p.careInstructions].map((value) => value.toLowerCase())
+
+    return haystacks.some((value) => {
+      const words = value.split(/[^a-z0-9]+/).filter(Boolean)
+      return words.some((word) => word.startsWith(searchTerm)) || value.startsWith(searchTerm)
+    })
+  })
 }

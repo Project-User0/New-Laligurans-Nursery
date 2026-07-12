@@ -1,49 +1,54 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
-import { Navbar } from '@/components/layout/Navbar'
-import { Footer } from '@/components/layout/Footer'
-import { toast } from 'sonner'
-import { motion } from 'framer-motion'
-import { Mail, Lock, Eye, EyeOff } from 'lucide-react'
+import { useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { Navbar } from "@/components/layout/Navbar";
+import { Footer } from "@/components/layout/Footer";
+import { toast } from "sonner";
+import { motion } from "framer-motion";
+import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 
 export default function LoginPage() {
-  const router = useRouter()
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [showPassword, setShowPassword] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    
+    e.preventDefault();
+
     if (!email || !password) {
-      toast.error('Please fill in all fields')
-      return
+      toast.error("Please fill in all fields");
+      return;
     }
 
-    setIsLoading(true)
+    setIsLoading(true);
     try {
       // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000))
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      const username = email.split("@")[0];
+      const isAdmin = username === "admin";
+
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          email,
+          name: username,
+          isAdmin,
+        }),
+      );
+      toast.success("Logged in successfully");
+      router.push(isAdmin ? "/admin" : "/");
       
-      // Store user session
-      localStorage.setItem('user', JSON.stringify({
-        email,
-        name: email.split('@')[0],
-        isAdmin: false,
-      }))
-      
-      toast.success('Logged in successfully')
-      router.push('/')
     } catch (error) {
-      toast.error('Failed to log in')
+      toast.error("Failed to log in");
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
     <div className="bg-background text-foreground min-h-screen flex flex-col">
@@ -84,7 +89,7 @@ export default function LoginPage() {
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                 <input
-                  type={showPassword ? 'text' : 'password'}
+                  type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
@@ -107,16 +112,10 @@ export default function LoginPage() {
             {/* Remember Me */}
             <div className="flex items-center justify-between">
               <label className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  className="w-4 h-4 rounded"
-                />
+                <input type="checkbox" className="w-4 h-4 rounded" />
                 <span className="text-sm">Remember me</span>
               </label>
-              <Link
-                href="#"
-                className="text-sm text-primary hover:underline"
-              >
+              <Link href="#" className="text-sm text-primary hover:underline">
                 Forgot password?
               </Link>
             </div>
@@ -127,7 +126,7 @@ export default function LoginPage() {
               disabled={isLoading}
               className="w-full bg-primary text-white py-2 rounded-lg font-semibold hover:bg-opacity-90 transition disabled:opacity-50"
             >
-              {isLoading ? 'Signing in...' : 'Sign In'}
+              {isLoading ? "Signing in..." : "Sign In"}
             </button>
           </form>
 
@@ -155,7 +154,7 @@ export default function LoginPage() {
 
           {/* Sign Up Link */}
           <p className="text-center text-muted-foreground">
-            Don&apos;t have an account?{' '}
+            Don&apos;t have an account?{" "}
             <Link
               href="/auth/register"
               className="text-primary hover:underline font-medium"
@@ -168,5 +167,5 @@ export default function LoginPage() {
 
       <Footer />
     </div>
-  )
+  );
 }

@@ -223,19 +223,34 @@ export default function ShopPage() {
           {/* Products Section */}
           <div className="flex-1">
             {/* Toolbar */}
-            <div className="flex items-center justify-between mb-6 pb-4 border-b border-border">
-              <div className="text-sm text-muted-foreground">
-                {products?.total ? (
-                  <>
-                    Showing {(filters.page! - 1) * 12 + 1}-
-                    {Math.min(filters.page! * 12, products.total)} of {products.total}
-                  </>
-                ) : (
-                  'Loading...'
-                )}
+            <div className="flex flex-col gap-4 mb-6 pb-4 border-b border-border lg:flex-row lg:items-center lg:justify-between">
+              <div className="w-full lg:max-w-md">
+                <label className="mb-2 block text-sm text-muted-foreground">Search plants</label>
+                <div className="relative">
+                  <input
+                    type="text"
+                    value={filters.query || ''}
+                    onChange={(e) => handleFilterChange({ query: e.target.value })}
+                    placeholder="Search by name, category, or care"
+                    className="w-full rounded-lg border border-border bg-background px-3 py-2 pl-10 text-sm"
+                  />
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">🔎</span>
+                </div>
               </div>
 
-              <div className="flex items-center gap-4">
+              <div className="flex items-center justify-between gap-4">
+                <div className="text-sm text-muted-foreground">
+                  {products?.total ? (
+                    <>
+                      Showing {(filters.page! - 1) * 12 + 1}-
+                      {Math.min(filters.page! * 12, products.total)} of {products.total}
+                    </>
+                  ) : (
+                    'Loading...'
+                  )}
+                </div>
+
+                <div className="flex items-center gap-4">
                 {/* Sort */}
                 <div className="relative">
                   <select
@@ -256,13 +271,14 @@ export default function ShopPage() {
                   <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
                 </div>
 
-                {/* Mobile Filter Toggle */}
-                <button
-                  onClick={() => setShowFilters(!showFilters)}
-                  className="lg:hidden px-4 py-2 border border-border rounded-lg text-sm hover:bg-secondary transition"
-                >
-                  Filters
-                </button>
+                  {/* Mobile Filter Toggle */}
+                  <button
+                    onClick={() => setShowFilters(!showFilters)}
+                    className="lg:hidden px-4 py-2 border border-border rounded-lg text-sm hover:bg-secondary transition"
+                  >
+                    Filters
+                  </button>
+                </div>
               </div>
             </div>
 

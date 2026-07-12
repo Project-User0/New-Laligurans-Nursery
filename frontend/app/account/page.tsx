@@ -68,6 +68,7 @@ export default function AccountPage() {
 
   const handleLogout = () => {
     localStorage.removeItem('user')
+    localStorage.removeItem('isAdmin')
     toast.success('Logged out successfully')
     router.push('/')
   }
