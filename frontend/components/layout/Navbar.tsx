@@ -1,7 +1,17 @@
 "use client";
 
 import Link from "next/link";
-import { ShoppingCart, Heart, User, Menu, X } from "lucide-react";
+import {
+  ShoppingCart,
+  Heart,
+  User,
+  Menu,
+  X,
+  Store,
+  Leaf,
+  Sprout,
+  Phone,
+} from "lucide-react";
 import { useState } from "react";
 import { useCart } from "@/store/cart";
 import Image from "next/image";
@@ -14,11 +24,9 @@ export function Navbar() {
     <nav className="sticky top-0 z-50 bg-background border-b border-border shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          {/* Logo */}
-          {/* Logo */}
           <Link href="/" className="flex items-center gap-3">
             <Image
-              src="/laligurans-logo.png" // Update with your logo path
+              src="/laligurans-logo.png"
               alt="New Laligurans Nursery"
               width={60}
               height={60}
@@ -26,7 +34,6 @@ export function Navbar() {
               className="h-10 w-auto md:h-12"
             />
 
-            {/* Brand Name - Hidden on mobile */}
             <div className="hidden md:flex flex-col leading-none">
               <span className="text-md font-bold text-foreground">
                 New Laligurans
@@ -35,35 +42,48 @@ export function Navbar() {
             </div>
           </Link>
 
-          {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
             <Link
               href="/shop"
-              className="text-foreground hover:text-primary transition"
+              className="relative flex items-center gap-2 text-foreground transition-colors duration-300 hover:text-green-700
+              after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-green-700
+              after:transition-all after:duration-500 hover:after:w-full"
             >
-              Shop
+              <Store className="w-4 h-4" />
+              <span>Shop</span>
             </Link>
+
             <Link
               href="/about"
-              className="text-foreground hover:text-primary transition"
+              className="relative flex items-center gap-2 text-foreground transition-colors duration-300 hover:text-green-700
+              after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-green-700
+              after:transition-all after:duration-500 hover:after:w-full"
             >
-              About
+              <Leaf className="w-4 h-4" />
+              <span>About</span>
             </Link>
+
             <Link
               href="/services"
-              className="text-foreground hover:text-primary transition"
+              className="relative flex items-center gap-2 text-foreground transition-colors duration-300 hover:text-green-700
+              after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-green-700
+              after:transition-all after:duration-500 hover:after:w-full"
             >
-              Services
+              <Sprout className="w-4 h-4" />
+              <span>Services</span>
             </Link>
+
             <Link
               href="/contact"
-              className="text-foreground hover:text-primary transition"
+              className="relative flex items-center gap-2 text-foreground transition-colors duration-300 hover:text-green-700
+              after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-green-700
+              after:transition-all after:duration-500 hover:after:w-full"
             >
-              Contact
+              <Phone className="w-4 h-4" />
+              <span>Contact</span>
             </Link>
           </div>
 
-          {/* Right Icons */}
           <div className="flex items-center gap-4">
             <Link
               href="/wishlist"
@@ -91,7 +111,6 @@ export function Navbar() {
               <User className="w-6 h-6" />
             </Link>
 
-            {/* Mobile Menu Button */}
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="md:hidden text-foreground"
@@ -105,32 +124,38 @@ export function Navbar() {
           </div>
         </div>
 
-        {/* Mobile Navigation */}
         {isOpen && (
           <div className="md:hidden border-t border-border py-4 space-y-4">
             <Link
               href="/shop"
-              className="block text-foreground hover:text-primary transition"
+              className="flex items-center gap-3 text-foreground hover:text-primary transition"
             >
-              Shop
+              <Store className="w-5 h-5" />
+              <span>Shop</span>
             </Link>
+
             <Link
               href="/about"
-              className="block text-foreground hover:text-primary transition"
+              className="flex items-center gap-3 text-foreground hover:text-primary transition"
             >
-              About
+              <Leaf className="w-5 h-5" />
+              <span>About</span>
             </Link>
+
             <Link
               href="/services"
-              className="block text-foreground hover:text-primary transition"
+              className="flex items-center gap-3 text-foreground hover:text-primary transition"
             >
-              Services
+              <Sprout className="w-5 h-5" />
+              <span>Services</span>
             </Link>
+
             <Link
               href="/contact"
-              className="block text-foreground hover:text-primary transition"
+              className="flex items-center gap-3 text-foreground hover:text-primary transition"
             >
-              Contact
+              <Phone className="w-5 h-5" />
+              <span>Contact</span>
             </Link>
           </div>
         )}

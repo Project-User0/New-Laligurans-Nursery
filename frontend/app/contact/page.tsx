@@ -97,17 +97,17 @@ export default function ContactPage() {
     {
       icon: Phone,
       title: 'Phone',
-      details: ['+977 9866224029', '+977 9866224029'],
+      details: ['+977 9866224029'],
     },
     {
       icon: Mail,
       title: 'Email',
-      details: ['info@laliguransnursery.com', 'support@laliguransnursery.com'],
+      details: ['newlaligurasnursery@gmail.com'],
     },
     {
       icon: MapPin,
       title: 'Address',
-      details: ['Manakamana Path, Butwal 32907', 'Nepal'],
+      details: ['Butwal-12, Rupandehi, Butwal, 32907 Nepal'],
     },
     {
       icon: Clock,
