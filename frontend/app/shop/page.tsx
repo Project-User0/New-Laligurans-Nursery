@@ -238,7 +238,7 @@ export default function ShopPage() {
                 </div>
               </div>
 
-              <div className="flex items-center justify-between gap-4">
+              <div className="grid md:flex items-center justify-between gap-4">
                 <div className="text-sm text-muted-foreground">
                   {products?.total ? (
                     <>

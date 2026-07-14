@@ -12,13 +12,22 @@ import {
   Sprout,
   Phone,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useCart } from "@/store/cart";
 import Image from "next/image";
+import { useWishlist } from "@/store/wishlist";
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [mounted, setMounted] = useState(false); // Fixes hydration mismatch
+
   const cartItems = useCart((state) => state.items);
+  const wishlistItems = useWishlist((state) => state.items);
+
+  // Set mounted to true once components mounts on the browser
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <nav className="sticky top-0 z-50 bg-background border-b border-border shadow-sm">
@@ -84,12 +93,19 @@ export function Navbar() {
             </Link>
           </div>
 
+          {/* Action Icons */}
           <div className="flex items-center gap-4">
+            {/* FIXED: Added 'relative' to the className below */}
             <Link
               href="/wishlist"
-              className="text-foreground hover:text-primary transition"
+              className="relative text-foreground hover:text-primary transition"
             >
               <Heart className="w-6 h-6" />
+              {mounted && wishlistItems.length > 0 && (
+                <span className="absolute -top-2 -right-2 bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                  {wishlistItems.length}
+                </span>
+              )}
             </Link>
 
             <Link
@@ -97,7 +113,7 @@ export function Navbar() {
               className="relative text-foreground hover:text-primary transition"
             >
               <ShoppingCart className="w-6 h-6" />
-              {cartItems.length > 0 && (
+              {mounted && cartItems.length > 0 && (
                 <span className="absolute -top-2 -right-2 bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                   {cartItems.length}
                 </span>
